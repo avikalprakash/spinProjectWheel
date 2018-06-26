@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/btn_pre"
+    android:layout_marginTop="50dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spicy Chicken Roast for"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="15dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="10dp"
+            android:gravity="center_horizontal"
+            android:id="@+id/griddetail_text"
+            android:textColor="#bc9842"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spicy Chicken Roast for"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="15dp"
+            android:layout_below="@+id/griddetail_text"
+            android:gravity="center_horizontal"
+            android:id="@+id/griddetail_text2"
+            android:textColor="#bc9842"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spicy Chicken Roast for"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="15dp"
+            android:paddingBottom="8dp"
+            android:layout_below="@+id/griddetail_text2"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:id="@+id/griddetail_text3"
+            android:textColor="#bc9842"
+            android:textStyle="bold"
+            />
+
+</RelativeLayout>
