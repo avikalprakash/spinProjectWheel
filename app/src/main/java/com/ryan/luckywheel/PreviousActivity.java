@@ -108,8 +108,9 @@ public class PreviousActivity extends AppCompatActivity {
                                     movie.setSix(obj.getString("6"));
                                     movie.setSeven(obj.getString("7"));
                                     movie.setEight(obj.getString("8"));
+                                    movie.setDateData(obj.getString("date"));
                                     Log.d("eight", obj.getString("8"));
-                                    Log.d("eeeeeee", movie.getEight());
+                                    Log.d("eeeeeee", obj.getString("date"));
                                     pojoClasses.add(movie);
 
                                 }

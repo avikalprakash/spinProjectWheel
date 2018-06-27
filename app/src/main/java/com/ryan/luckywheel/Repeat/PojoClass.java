@@ -16,6 +16,7 @@ public class PojoClass {
     String seven;
     String eight;
     String nine;
+    String dateData;
 
     public String getZero() {
         return zero;
@@ -95,5 +96,13 @@ public class PojoClass {
 
     public void setNine(String nine) {
         this.nine = nine;
+    }
+
+    public String getDateData() {
+        return dateData;
+    }
+
+    public void setDateData(String dateData) {
+        this.dateData = dateData;
     }
 }

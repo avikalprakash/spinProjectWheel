@@ -246,6 +246,7 @@
         android:background="@drawable/btn_pre"
         android:layout_marginTop="20dp"
         android:id="@+id/eight"
+        android:layout_marginBottom="50dp"
         android:layout_below="@+id/seven">
 
 

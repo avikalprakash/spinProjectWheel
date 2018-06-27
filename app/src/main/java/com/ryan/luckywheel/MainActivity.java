@@ -18,8 +18,10 @@ import android.widget.TextView;
 
 import com.ryan.luckywheel.Repeat.AlarmReceiver;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int FIFTH_TURN_HOUR=16;
     int FIFTH_TURN_MINUTE=00;
     int FIFTH_TURN_SECOND=01;
+
     int SIXTH_TURN_HOUR=17;
     int SIXTH_TURN_MINUTE=00;
     int SIXTH_TURN_SECOND=01;
@@ -90,7 +93,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String dateString = sdf.format(new Date());
+        Log.d("dateeeeeeeeeeeee",dateString);
         context=this;
         /*new Handler().postDelayed(new Runnable() {
             @Override
@@ -107,9 +112,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          upcomingList.setOnClickListener(this);
 
 
-        String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+        java.text.SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy,  hh:mm");
+        String mydate = simpleDateFormat.format(new Date());
         TextView time = (TextView)findViewById(R.id.time);
-        time.setText(mydate);
+        time.setText(mydate+" am");
 
          //5,8,2,0
 
@@ -313,6 +319,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         firstTurn.set(Calendar.MINUTE, FIRST_TURN_MINUTE);
         firstTurn.set(Calendar.SECOND, FIRST_TURN_SECOND);
         firstTurn.set(Calendar.MILLISECOND, FIRST_TURN_SECOND);
+
         Log.d("hhhhh", "uuuu");
         Log.d("time1", String.valueOf(System.currentTimeMillis()));
         //context.sendBroadcast(intent);

@@ -54,6 +54,9 @@ import java.util.Random;
 import rubikstudio.library.LuckyWheelView;
 import rubikstudio.library.model.LuckyItem;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
     List<LuckyItem> data = new ArrayList<>();
     final public static String ONE_TIME = "onetime";
@@ -78,8 +81,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     LinearLayout previousList, upcomingList;
     int iNumber;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -93,9 +95,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         previousList.setOnClickListener(this);
         upcomingList.setOnClickListener(this);
 
-        String mydate = java.text.DateFormat.getDateTimeInstance().format(java.util.Calendar.getInstance().getTime());
+        java.text.SimpleDateFormat simpleDateFormat = new java.text.SimpleDateFormat("dd-MM-yyyy,  hh:mm");
+        String mydate = simpleDateFormat.format(new Date());
         TextView time = (TextView)findViewById(R.id.time);
-        time.setText(mydate);
+        time.setText(mydate+" am");
 
 
         //5,8,2,0
@@ -190,8 +193,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         //prefs2.edit().clear().commit();
 
 
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        key = prefs.getInt("idName", 0); //0 is the default value.
+     //   SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+     //   key = prefs.getInt("idName", 0); //0 is the default value.
 
 
        // Login();
@@ -209,7 +212,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             }
         }
 
-        if(key<8){
+       /* if(key<8){
             key++;
             SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
             editor.putInt("idName", key);
@@ -224,6 +227,36 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
             editor.putInt("idName", key);
             editor.apply();
+        }*/
+
+
+
+
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm");
+        String dateString = sdf.format(new Date());
+
+
+        Log.d("ttttttimmm", dateString);
+
+        if(dateString.equals("12:00")||dateString.equals("12:01")) {
+            key=0;
+
+        }else if(dateString.equals("13:00")||dateString.equals("13:01")) {
+            key=1;
+        }else if(dateString.equals("14:00")||dateString.equals("14:01")) {
+            key=2;
+        }else if(dateString.equals("15:00")||dateString.equals("15:01")) {
+            key=3;
+        }else if(dateString.equals("16:00")||dateString.equals("16:01")) {
+            key=4;
+        }else if(dateString.equals("17:00")||dateString.equals("17:01")) {
+            key=5;
+        }else if(dateString.equals("18:00")||dateString.equals("18:01")) {
+            key=6;
+        }else if(dateString.equals("19:00")||dateString.equals("19:01")) {
+            key=7;
+        }else if(dateString.equals("20:00")||dateString.equals("20:01")) {
+            key=8;
         }
 
 
@@ -264,16 +297,20 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     class SendData extends AsyncTask<String, Void, String> {
 
         private ProgressDialog pDialog;
         //get Current date
-        Date c = Calendar.getInstance().getTime();
+        /*Date c = Calendar.getInstance().getTime();
 
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = df.format(c);
+        String formattedDate = df.format(c);*/
+
+
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = sdf.format(new Date());
 
 
 
@@ -301,6 +338,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("date", formattedDate);
                 jsonObject.accumulate("key", key);
+                Log.d("keeeeyyyy", String.valueOf(key));
                 StringEntity stringEntity = new StringEntity(jsonObject.toString());
                 httpPost.setEntity(stringEntity);
                 HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -330,142 +368,143 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                   Log.d("live_number", live);
                   if (!live.equals("")&& !live.equals("null")) {
                       iNumber = Integer.parseInt(live);
-                  }
+
 //Add the bundle to the intent
-                    int lo=0, l1=9, l2=1, l3=8, l4=2, l5=7, l6=3, l7=6, l8=4, l9=5;
-                    //need to add +1 number suppose you want 9 num the you need to call l1+1(1+1)
-                    //suppose you want 7 num the you need to call l5+1(5+1)
-                    if (iNumber==0){
-                        luckyWheelView.startLuckyWheelWithTargetIndex(0);
-                        luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
-                            @Override
-                            public void LuckyRoundItemSelected(int index) {
-                                liveText.setText("Live : " +String.valueOf(0));
-                                 editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("live", String.valueOf(0));
-                                editor.apply();
+                      int lo = 0, l1 = 9, l2 = 1, l3 = 8, l4 = 2, l5 = 7, l6 = 3, l7 = 6, l8 = 4, l9 = 5;
+                      //need to add +1 number suppose you want 9 num the you need to call l1+1(1+1)
+                      //suppose you want 7 num the you need to call l5+1(5+1)
+                      if (iNumber == 0) {
+                          luckyWheelView.startLuckyWheelWithTargetIndex(0);
+                          luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+                              @Override
+                              public void LuckyRoundItemSelected(int index) {
+                                  liveText.setText("Live : " + String.valueOf(0));
+                                  editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                  editor.putString("live", String.valueOf(0));
+                                  editor.apply();
 
-                            }
-                        });
-                       //
-                    }else if (iNumber==1){
-                        luckyWheelView.startLuckyWheelWithTargetIndex(3);
-                        luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
-                            @Override
-                            public void LuckyRoundItemSelected(int index) {
-                                liveText.setText("Live : " +String.valueOf(1));
-                                 editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("live", String.valueOf(1));
-                                editor.apply();
+                              }
+                          });
+                          //
+                      } else if (iNumber == 1) {
+                          luckyWheelView.startLuckyWheelWithTargetIndex(3);
+                          luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+                              @Override
+                              public void LuckyRoundItemSelected(int index) {
+                                  liveText.setText("Live : " + String.valueOf(1));
+                                  editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                  editor.putString("live", String.valueOf(1));
+                                  editor.apply();
 
-                            }
-                        });
-                    }else if (iNumber==2){
-                        luckyWheelView.startLuckyWheelWithTargetIndex(5);
-                        luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
-                            @Override
-                            public void LuckyRoundItemSelected(int index) {
-                                liveText.setText("Live : " +String.valueOf(2));
-                                editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("live", String.valueOf(2));
-                                editor.apply();
+                              }
+                          });
+                      } else if (iNumber == 2) {
+                          luckyWheelView.startLuckyWheelWithTargetIndex(5);
+                          luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+                              @Override
+                              public void LuckyRoundItemSelected(int index) {
+                                  liveText.setText("Live : " + String.valueOf(2));
+                                  editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                  editor.putString("live", String.valueOf(2));
+                                  editor.apply();
 
-                            }
-                        });
-                    }else if (iNumber==3){
-                        luckyWheelView.startLuckyWheelWithTargetIndex(7);
-                        luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
-                            @Override
-                            public void LuckyRoundItemSelected(int index) {
-                                liveText.setText("Live : " +String.valueOf(3));
-                                 editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("live", String.valueOf(3));
-                                editor.apply();
+                              }
+                          });
+                      } else if (iNumber == 3) {
+                          luckyWheelView.startLuckyWheelWithTargetIndex(7);
+                          luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+                              @Override
+                              public void LuckyRoundItemSelected(int index) {
+                                  liveText.setText("Live : " + String.valueOf(3));
+                                  editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                  editor.putString("live", String.valueOf(3));
+                                  editor.apply();
 
-                            }
-                        });
-                    }else if (iNumber==4){
-                        luckyWheelView.startLuckyWheelWithTargetIndex(9);
-                        luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
-                            @Override
-                            public void LuckyRoundItemSelected(int index) {
-                                liveText.setText("Live : " +String.valueOf(4));
-                                 editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("live", String.valueOf(4));
-                                editor.apply();
+                              }
+                          });
+                      } else if (iNumber == 4) {
+                          luckyWheelView.startLuckyWheelWithTargetIndex(9);
+                          luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+                              @Override
+                              public void LuckyRoundItemSelected(int index) {
+                                  liveText.setText("Live : " + String.valueOf(4));
+                                  editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                  editor.putString("live", String.valueOf(4));
+                                  editor.apply();
 
-                            }
-                        });
-                    }else if (iNumber==5){
-                        luckyWheelView.startLuckyWheelWithTargetIndex(10);
-                        luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
-                            @Override
-                            public void LuckyRoundItemSelected(int index) {
-                                liveText.setText("Live : " +String.valueOf(5));
-                                 editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("live", String.valueOf(5));
-                                editor.apply();
+                              }
+                          });
+                      } else if (iNumber == 5) {
+                          luckyWheelView.startLuckyWheelWithTargetIndex(10);
+                          luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+                              @Override
+                              public void LuckyRoundItemSelected(int index) {
+                                  liveText.setText("Live : " + String.valueOf(5));
+                                  editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                  editor.putString("live", String.valueOf(5));
+                                  editor.apply();
 
-                            }
-                        });
-                    }else if (iNumber==6){
-                        luckyWheelView.startLuckyWheelWithTargetIndex(8);
-                        luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
-                            @Override
-                            public void LuckyRoundItemSelected(int index) {
-                                liveText.setText("Live : " +String.valueOf(6));
-                                 editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("live", String.valueOf(6));
-                                editor.apply();
+                              }
+                          });
+                      } else if (iNumber == 6) {
+                          luckyWheelView.startLuckyWheelWithTargetIndex(8);
+                          luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+                              @Override
+                              public void LuckyRoundItemSelected(int index) {
+                                  liveText.setText("Live : " + String.valueOf(6));
+                                  editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                  editor.putString("live", String.valueOf(6));
+                                  editor.apply();
 
-                            }
-                        });
-                    }else if (iNumber==7){
-                        luckyWheelView.startLuckyWheelWithTargetIndex(6);
-                        luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
-                            @Override
-                            public void LuckyRoundItemSelected(int index) {
-                                liveText.setText("Live : " +String.valueOf(7));
-                                 editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("live", String.valueOf(7));
-                                editor.apply();
+                              }
+                          });
+                      } else if (iNumber == 7) {
+                          luckyWheelView.startLuckyWheelWithTargetIndex(6);
+                          luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+                              @Override
+                              public void LuckyRoundItemSelected(int index) {
+                                  liveText.setText("Live : " + String.valueOf(7));
+                                  editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                  editor.putString("live", String.valueOf(7));
+                                  editor.apply();
 
-                            }
-                        });
-                    }else if (iNumber==8){
-                        luckyWheelView.startLuckyWheelWithTargetIndex(4);
-                        luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
-                            @Override
-                            public void LuckyRoundItemSelected(int index) {
-                                liveText.setText("Live : " +String.valueOf(8));
-                                 editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("live", String.valueOf(8));
-                                editor.apply();
+                              }
+                          });
+                      } else if (iNumber == 8) {
+                          luckyWheelView.startLuckyWheelWithTargetIndex(4);
+                          luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+                              @Override
+                              public void LuckyRoundItemSelected(int index) {
+                                  liveText.setText("Live : " + String.valueOf(8));
+                                  editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                  editor.putString("live", String.valueOf(8));
+                                  editor.apply();
 
-                            }
-                        });
-                    }else if (iNumber==9){
-                        luckyWheelView.startLuckyWheelWithTargetIndex(2);
-                        luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
-                            @Override
-                            public void LuckyRoundItemSelected(int index) {
-                                liveText.setText("Live : " +String.valueOf(9));
-                                editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("live", String.valueOf(9));
-                                editor.apply();
+                              }
+                          });
+                      } else if (iNumber == 9) {
+                          luckyWheelView.startLuckyWheelWithTargetIndex(2);
+                          luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+                              @Override
+                              public void LuckyRoundItemSelected(int index) {
+                                  liveText.setText("Live : " + String.valueOf(9));
+                                  editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                  editor.putString("live", String.valueOf(9));
+                                  editor.apply();
 
-                            }
-                        });
-                    }
+                              }
+                          });
+                      }
+                  }
                     nn=1;
                    // luckyWheelView.startLuckyWheelWithTargetIndex(Integer.parseInt(live));
                    // Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                    if (key==8) {
+                   /* if (key==8) {
                         key++;
                         SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         editor.putInt("idName", key);
                         editor.apply();
-                    }
+                    }*/
                 }else{
                     Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG).show();
                     }
